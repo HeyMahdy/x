@@ -1,9 +1,9 @@
 import express from 'express';
-import {register,loginUser,logoutUser,ResetPassword} from '../controllers/auth-controller'
+import {register,loginUser,logoutUser,ResetPassword} from '../controllers/auth-controller.js'
 
 const router = express.Router();
 
-router.post("/signin/:id",register);
+router.post("/signin",register);
 
 router.post("/login",loginUser);
 

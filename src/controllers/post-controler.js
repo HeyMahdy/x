@@ -4,10 +4,15 @@ import postDto from '../utils/dto.js'
 
 const getAllPosts = async (req, res) => {
      try {
+               
+              const lala = req.userInfo
+              console.log(lala)
               const allBooks = await Post.find()
               if(allBooks?.length>0){
                  res.status(200).json({
                      data : allBooks.map(postDto)
+                     
+
                  })
               }
               else {
