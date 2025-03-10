@@ -7,13 +7,13 @@ const router = express.Router();
 
 
 // Get all posts
-router.get("/get",AuthMiddleware,getAllPosts);
+router.get("/getAll",AuthMiddleware,getAllPosts);
 
 router.get("/get/:id",AuthMiddleware,getPostById);
 
-router.post("/update/:id",UpdatePost);
+router.post("/update/:id",AuthMiddleware,UpdatePost);
 
-router.post("/add",savePost);
+router.post("/save",AuthMiddleware,savePost);
 
 
 

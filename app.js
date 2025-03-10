@@ -1,5 +1,5 @@
 import express from 'express';
-import dbConnection from './src/Database/db.js'; // Adjust this path if necessary';
+import { dbConnection, Man_dbConnection } from './src/Database/db.js';// Adjust this path if necessary';
 import BooksRoute from './src/routes/books-routes.js'
 import AuthRoute from './src/routes/auth-routes.js'
 import dotenv from 'dotenv';
