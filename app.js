@@ -1,6 +1,5 @@
 import express from 'express';
 import { dbConnection, Man_dbConnection } from './src/Database/db.js';// Adjust this path if necessary';
-import BooksRoute from './src/routes/books-routes.js'
 import AuthRoute from './src/routes/auth-routes.js'
 import dotenv from 'dotenv';
 
@@ -15,7 +14,6 @@ dbConnection();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use('/api/books',BooksRoute)
 app.use('/api/auth',AuthRoute)
 
 app.listen(port, () => {
