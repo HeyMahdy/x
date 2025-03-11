@@ -1,14 +1,28 @@
-import User from '../models/user.js'
+import pkg from '@prisma/client';
+const {PrismaClient } = pkg;
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken'
+
+
+const prisma = new PrismaClient()
+
+
+
+
+
 
 
 const register = async(req,res) => {
            
         try {
             const user = req.body;
-            const existingUser = await User.findOne({
-                $or: [{ username: user.username }, { email: user.email }]
+            const existingUser = await prisma.user.findFirst({
+                where : {
+                    OR : [
+                        {email : user.email},
+                        {username : user.username }
+                    ]
+                }
             });
             if(existingUser){
                 res.status(404).json({
@@ -19,16 +33,15 @@ const register = async(req,res) => {
 
                 const salt = await bcrypt.genSalt(10)
                 const hashpassword = await bcrypt.hash(user.password,salt)
-                const newUser = await User.create(
-                   {
-                           username:user.username,
-                           email:user.email,
-                           password:hashpassword,
-                           role : user.role
-
-                   }
-                )
-                await newUser.save()
+                const newUser = await prisma.user.create({
+                    data:{
+                        email : user.email,
+                        password : hashpassword,
+                        username : user.username
+                    }
+                });
+                
+                
                 if(newUser){
                     res.status(200).json({
                         message:"user created"
@@ -42,11 +55,11 @@ const register = async(req,res) => {
                 
             }
 
-            
         }
         catch(error){
+            console.log(error)
             res.status(404).json({
-                message:"shit aint shiting"
+                message:"server error"
             })
         }
 
@@ -61,7 +74,15 @@ const loginUser = async(req,res) => {
 
             
 
-            const findUser = await User.findOne({$or:[{username:username},{email:email}]})
+            const findUser = await prisma.user.findFirst({
+                where : {
+                    OR : [
+                        {email : email},
+                        {username : username }
+                    ]
+                }
+            })
+              
             
             if(!findUser){
                 res.status(400).json({
