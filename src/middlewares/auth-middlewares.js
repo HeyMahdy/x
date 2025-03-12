@@ -9,7 +9,8 @@ const authMiddleware = (req,res,next) => {
     const token = authHeader && authHeader.split(" ")[1]
     if(!token){
         res.status(401).json({
-            message : "access denied man"
+            message : "access denied man",
+            x: "fw4fwf"
         })
     }
 
