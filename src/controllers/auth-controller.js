@@ -7,11 +7,6 @@ import jwt from 'jsonwebtoken'
 const prisma = new PrismaClient()
 
 
-
-
-
-
-
 const register = async(req,res) => {
            
         try {
